@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>化学シミュレーション | 理科Webシミュレーション</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-vial" style="color: #e74c3c; font-size: 2rem;"></i>
+                <h1>化学シミュレーション</h1>
+            </div>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>トップに戻る</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="simulation-grid">
+            <!-- 1. 物質の三態変化 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-snowflake" style="color: #e74c3c;"></i> 物質の三態変化</h2>
+                <p class="description">
+                    温度を変化させて、物質が固体・液体・気体の状態に変わる様子を観察しましょう。
+                    分子の動きや配置が温度によってどう変わるかが分かります。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="stateCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>温度</span>
+                                <span class="control-value"><span id="temperatureValue">25</span>°C</span>
+                            </label>
+                            <input type="range" id="temperatureSlider" min="-50" max="150" value="25">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startState">
+                                <i class="fas fa-play"></i> 分子を動かす
+                            </button>
+                            <button class="btn-secondary" id="stopState">
+                                <i class="fas fa-pause"></i> 停止
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 化学反応式 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-flask" style="color: #e74c3c;"></i> 化学反応の可視化</h2>
+                <p class="description">
+                    水素と酸素が反応して水ができる過程を可視化します。
+                    反応前と反応後で原子の数が変わらないことを確認できます（質量保存の法則）。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="reactionCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>水素分子 (H₂)</span>
+                                <span class="control-value"><span id="h2Value">4</span> 個</span>
+                            </label>
+                            <input type="range" id="h2Slider" min="1" max="8" value="4">
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>酸素分子 (O₂)</span>
+                                <span class="control-value"><span id="o2Value">2</span> 個</span>
+                            </label>
+                            <input type="range" id="o2Slider" min="1" max="4" value="2">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-success" id="startReaction">
+                                <i class="fas fa-fire"></i> 反応開始
+                            </button>
+                            <button class="btn-secondary" id="resetReaction">
+                                <i class="fas fa-redo"></i> リセット
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 分子モデル -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-atom" style="color: #e74c3c;"></i> 分子モデル</h2>
+                <p class="description">
+                    代表的な分子の構造を3D的に表示します。原子の種類と結合を視覚的に理解できます。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="moleculeCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label><span>分子の種類を選択</span></label>
+                            <select id="moleculeType" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem;">
+                                <option value="water">水 (H₂O)</option>
+                                <option value="co2">二酸化炭素 (CO₂)</option>
+                                <option value="methane">メタン (CH₄)</option>
+                                <option value="ammonia">アンモニア (NH₃)</option>
+                                <option value="oxygen">酸素 (O₂)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>回転角度</span>
+                                <span class="control-value"><span id="rotationValue">0</span>°</span>
+                            </label>
+                            <input type="range" id="rotationSlider" min="0" max="360" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 溶解シミュレーター -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-tint" style="color: #e74c3c;"></i> 溶解のしくみ</h2>
+                <p class="description">
+                    砂糖や塩が水に溶ける様子をシミュレーションします。
+                    温度や量を変えて、溶解速度や溶解度の変化を観察しましょう。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="dissolutionCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>溶質の量</span>
+                                <span class="control-value"><span id="soluteValue">30</span> g</span>
+                            </label>
+                            <input type="range" id="soluteSlider" min="10" max="100" value="30" step="10">
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>水温</span>
+                                <span class="control-value"><span id="waterTempValue">25</span>°C</span>
+                            </label>
+                            <input type="range" id="waterTempSlider" min="0" max="100" value="25" step="5">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startDissolution">
+                                <i class="fas fa-play"></i> 溶解開始
+                            </button>
+                            <button class="btn-secondary" id="resetDissolution">
+                                <i class="fas fa-redo"></i> リセット
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 酸性・アルカリ性 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-vials" style="color: #e74c3c;"></i> 酸性・アルカリ性の可視化</h2>
+                <p class="description">
+                    pH指示薬を使って、溶液の酸性・アルカリ性を調べます。
+                    pHの値によって色が変わる様子を観察しましょう。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="phCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>pH値</span>
+                                <span class="control-value"><span id="phValue">7.0</span></span>
+                            </label>
+                            <input type="range" id="phSlider" min="0" max="14" value="7" step="0.5">
+                        </div>
+                        <div class="control-group">
+                            <label><span>指示薬の種類</span></label>
+                            <select id="indicatorType" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem;">
+                                <option value="litmus">リトマス試験紙</option>
+                                <option value="btb">BTB溶液</option>
+                                <option value="phenol">フェノールフタレイン</option>
+                                <option value="universal">万能指示薬</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="addAcid">
+                                <i class="fas fa-plus"></i> 酸を加える
+                            </button>
+                            <button class="btn-success" id="addBase">
+                                <i class="fas fa-plus"></i> 塩基を加える
+                            </button>
+                            <button class="btn-secondary" id="resetPh">
+                                <i class="fas fa-redo"></i> 中性に戻す
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 理科Webシミュレーション特設サイト</p>
+        </div>
+    </footer>
+
+    <script src="js/chemistry.js"></script>
+</body>
+</html>
