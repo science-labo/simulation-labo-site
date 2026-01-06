@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地学シミュレーション | 理科Webシミュレーション</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-globe-americas" style="color: #f39c12; font-size: 2rem;"></i>
+                <h1>地学シミュレーション</h1>
+            </div>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>トップに戻る</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="simulation-grid">
+            <!-- 1. 月の満ち欠け -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-moon" style="color: #f39c12;"></i> 月の満ち欠け</h2>
+                <p class="description">
+                    地球から見た月の形が変化する理由を理解しましょう。
+                    太陽・地球・月の位置関係によって、見え方が変わります。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="moonPhaseCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>日数（月の位置）</span>
+                                <span class="control-value"><span id="dayValue">0</span> 日目</span>
+                            </label>
+                            <input type="range" id="daySlider" min="0" max="29" value="0">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startMoon">
+                                <i class="fas fa-play"></i> 自動再生
+                            </button>
+                            <button class="btn-secondary" id="stopMoon">
+                                <i class="fas fa-pause"></i> 停止
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 太陽系の惑星軌道 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-rocket" style="color: #f39c12;"></i> 太陽系の惑星軌道</h2>
+                <p class="description">
+                    太陽を中心に、8つの惑星が公転する様子を観察します。
+                    惑星ごとに公転速度が異なることがわかります。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="solarSystemCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>再生速度</span>
+                                <span class="control-value"><span id="speedValue">1</span>倍</span>
+                            </label>
+                            <input type="range" id="speedSlider" min="1" max="10" value="1">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startSolar">
+                                <i class="fas fa-play"></i> スタート
+                            </button>
+                            <button class="btn-secondary" id="stopSolar">
+                                <i class="fas fa-pause"></i> ストップ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 地層の形成 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-layer-group" style="color: #f39c12;"></i> 地層の形成過程</h2>
+                <p class="description">
+                    堆積物が積み重なって地層ができる様子を観察します。
+                    粒の大きさや種類によって、層の特徴が変わります。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="stratumCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label><span>堆積物の種類</span></label>
+                            <select id="sedimentType" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem;">
+                                <option value="sand">砂</option>
+                                <option value="mud">泥</option>
+                                <option value="gravel">礫（れき）</option>
+                                <option value="volcanic">火山灰</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-success" id="addLayer">
+                                <i class="fas fa-plus"></i> 層を追加
+                            </button>
+                            <button class="btn-secondary" id="resetStratum">
+                                <i class="fas fa-redo"></i> リセット
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 火山の噴火 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-mountain" style="color: #f39c12;"></i> 火山の噴火シミュレーター</h2>
+                <p class="description">
+                    マグマの粘り気によって、噴火の様子が変わることを学びましょう。
+                    粘り気が強いと爆発的、弱いと穏やかな噴火になります。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="volcanoCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>マグマの粘り気</span>
+                                <span class="control-value"><span id="viscosityValue">50</span>%</span>
+                            </label>
+                            <input type="range" id="viscositySlider" min="10" max="100" value="50">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-danger" id="startEruption">
+                                <i class="fas fa-fire"></i> 噴火させる
+                            </button>
+                            <button class="btn-secondary" id="resetVolcano">
+                                <i class="fas fa-redo"></i> リセット
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 天体の動き -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-sun" style="color: #f39c12;"></i> 天体の動き（日周運動・年周運動）</h2>
+                <p class="description">
+                    地球の自転による星の日周運動と、公転による太陽の年周運動を観察します。
+                    時間を進めて、星座の動きを確認しましょう。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="celestialCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>時刻</span>
+                                <span class="control-value"><span id="timeValue">0</span> 時</span>
+                            </label>
+                            <input type="range" id="timeSlider" min="0" max="23" value="0">
+                        </div>
+                        <div class="control-group">
+                            <label><span>観測モード</span></label>
+                            <select id="motionType" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem;">
+                                <option value="diurnal">日周運動（星の動き）</option>
+                                <option value="annual">年周運動（太陽の動き）</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startCelestial">
+                                <i class="fas fa-play"></i> 自動再生
+                            </button>
+                            <button class="btn-secondary" id="stopCelestial">
+                                <i class="fas fa-pause"></i> 停止
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 理科Webシミュレーション特設サイト</p>
+        </div>
+    </footer>
+
+    <script src="js/earthscience.js"></script>
+</body>
+</html>
