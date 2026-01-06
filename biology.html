@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生物シミュレーション | 理科Webシミュレーション</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="page-header">
+        <div class="container">
+            <div class="page-title">
+                <i class="fas fa-dna" style="color: #2ecc71; font-size: 2rem;"></i>
+                <h1>生物シミュレーション</h1>
+            </div>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                <span>トップに戻る</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="simulation-grid">
+            <!-- 1. 細胞の観察 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-microscope" style="color: #2ecc71;"></i> 細胞の観察</h2>
+                <p class="description">
+                    植物細胞と動物細胞の構造の違いを観察しましょう。
+                    拡大率を変えて、細胞小器官を詳しく見ることができます。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="cellCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label><span>細胞の種類</span></label>
+                            <select id="cellType" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem;">
+                                <option value="plant">植物細胞</option>
+                                <option value="animal">動物細胞</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>拡大率</span>
+                                <span class="control-value"><span id="magnificationValue">100</span>倍</span>
+                            </label>
+                            <input type="range" id="magnificationSlider" min="50" max="200" value="100" step="10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 光合成のしくみ -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-leaf" style="color: #2ecc71;"></i> 光合成のしくみ</h2>
+                <p class="description">
+                    植物が光のエネルギーを使って、二酸化炭素と水から酸素とブドウ糖を作る過程を見てみましょう。
+                    光の強さを変えて、光合成の速度がどう変わるか観察できます。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="photosynthesisCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>光の強さ</span>
+                                <span class="control-value"><span id="lightIntensityValue">50</span>%</span>
+                            </label>
+                            <input type="range" id="lightIntensitySlider" min="0" max="100" value="50">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startPhotosynthesis">
+                                <i class="fas fa-play"></i> スタート
+                            </button>
+                            <button class="btn-secondary" id="stopPhotosynthesis">
+                                <i class="fas fa-pause"></i> ストップ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 食物連鎖 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-fish" style="color: #2ecc71;"></i> 食物連鎖・生態系</h2>
+                <p class="description">
+                    生産者（植物）、消費者（草食動物、肉食動物）のバランスを観察します。
+                    個体数を変えると、生態系全体がどう影響を受けるか分かります。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="foodChainCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>植物の数</span>
+                                <span class="control-value"><span id="plantsValue">50</span></span>
+                            </label>
+                            <input type="range" id="plantsSlider" min="10" max="100" value="50" step="10">
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>草食動物の数</span>
+                                <span class="control-value"><span id="herbivoresValue">20</span></span>
+                            </label>
+                            <input type="range" id="herbivoresSlider" min="5" max="50" value="20" step="5">
+                        </div>
+                        <div class="control-group">
+                            <label>
+                                <span>肉食動物の数</span>
+                                <span class="control-value"><span id="carnivoresValue">5</span></span>
+                            </label>
+                            <input type="range" id="carnivoresSlider" min="1" max="20" value="5">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startEcosystem">
+                                <i class="fas fa-play"></i> シミュレーション開始
+                            </button>
+                            <button class="btn-secondary" id="stopEcosystem">
+                                <i class="fas fa-pause"></i> 停止
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 細胞分裂 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-dna" style="color: #2ecc71;"></i> 細胞分裂のアニメーション</h2>
+                <p class="description">
+                    体細胞分裂の過程（間期、前期、中期、後期、終期）をステップごとに観察できます。
+                    染色体がどのように複製され、分配されるかを学びましょう。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="mitosisCan vas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>
+                                <span>分裂の段階</span>
+                                <span class="control-value"><span id="mitosisStageValue">間期</span></span>
+                            </label>
+                            <input type="range" id="mitosisStageSlider" min="0" max="4" value="0" step="1">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn-primary" id="startMitosis">
+                                <i class="fas fa-play"></i> 自動再生
+                            </button>
+                            <button class="btn-secondary" id="stopMitosis">
+                                <i class="fas fa-pause"></i> 停止
+                            </button>
+                            <button class="btn-secondary" id="resetMitosis">
+                                <i class="fas fa-redo"></i> 最初から
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 人体の臓器 -->
+            <div class="simulation-card">
+                <h2><i class="fas fa-heartbeat" style="color: #2ecc71;"></i> 人体の臓器配置</h2>
+                <p class="description">
+                    人体の主要な臓器の位置と名前を学びましょう。
+                    各臓器をクリックすると、その働きが表示されます。
+                </p>
+                <div class="simulation-content">
+                    <div class="canvas-container">
+                        <canvas id="humanBodyCanvas" width="600" height="400"></canvas>
+                    </div>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label><span>表示する系統</span></label>
+                            <select id="bodySystemType" style="padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd; font-size: 1rem;">
+                                <option value="digestive">消化器系</option>
+                                <option value="respiratory">呼吸器系</option>
+                                <option value="circulatory">循環器系</option>
+                                <option value="all">全体表示</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 理科Webシミュレーション特設サイト</p>
+        </div>
+    </footer>
+
+    <script src="js/biology.js"></script>
+</body>
+</html>
